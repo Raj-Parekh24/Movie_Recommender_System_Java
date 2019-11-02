@@ -1,7 +1,8 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Check {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Scanner sc=new Scanner(System.in);
         boolean ch=false;
         String us=new String();

@@ -1,4 +1,9 @@
-public class SignUp extends User {
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class SignUp extends User  {
     private String ConfirmationString;
     private boolean rr = false;
 
@@ -68,7 +73,7 @@ public class SignUp extends User {
         return r;
     }
 
-    public boolean emal(String a) {
+    public boolean emal(String a) throws IOException, ClassNotFoundException {
         int f = 1;
         try {
             if (a.length() == 0) {
@@ -85,10 +90,21 @@ public class SignUp extends User {
         } catch (MyException e) {
             System.out.println(e.getMessage());
         }
-        if (f == 0)
-            return true;
-        else
-            return false;
+        if(f==0)
+        {
+            WriteToFile writeToFile=new WriteToFile();
+            ArrayList<SignUp> signUps=writeToFile.readFile();
+            for(SignUp signUp:signUps)
+            {
+                if(signUp.getEmail().equals(a))
+                {
+                    System.out.println("Account already exist");
+                    f=1;
+                    break;
+                }
+            }
+        }
+        return f == 0;
     }
 
     public  boolean usname(String a) {
@@ -142,5 +158,72 @@ public class SignUp extends User {
         }
         if (f == 0) return true;
         else return false;
+    }
+
+    private boolean check()
+    {
+       return (username!=null&&email!=null&&passwd!=null&&phone!=null);
+    }
+
+    void display()
+    {
+        if(check())
+        System.out.println(username+" "+email+ " "+passwd + " "+phone);
+    }
+
+    public void fun(SignUp us1) throws IOException, ClassNotFoundException {
+        Scanner sc=new Scanner(System.in);
+        boolean ch=false;
+        String us;
+
+        while(!ch){
+            System.out.println("Enter a Username");
+            us=sc.nextLine();
+            ch=us1.usname(us);
+        }
+        ch=false;
+
+        while(!ch){
+            System.out.println("Enter a Phone number!");
+            us=sc.nextLine();
+            ch=us1.pho(us);
+        }
+        ch=false;
+
+        while(!ch){
+            System.out.println("Enter a Email Address!");
+            us=sc.nextLine();
+            ch=us1.emal(us);
+        }
+        ch=false;
+        while (!ch) {
+            System.out.println("Enter a Password!");
+            us = sc.nextLine();
+            ch = us1.pass(us);
+        }
+        ch=false;
+        while (!ch) {
+            System.out.println("Confirm Your Password!");
+            us = sc.nextLine();
+            ch = us1.Confirmpass(us);
+        }
+        WriteToFile writeToFile=new WriteToFile();
+       try {
+            writeToFile.fileWrite(writeToFile.readFile(),us1);
+        } catch ( ClassNotFoundException e) {
+            e.printStackTrace();
+        }catch (FileNotFoundException ex){
+           writeToFile.writeSingle(us1);
+       }
+        ArrayList<SignUp> s2=null;
+        try {
+            s2 = writeToFile.readFile();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        for(SignUp i:s2)
+        {
+            i.display();
+        }
     }
 }
