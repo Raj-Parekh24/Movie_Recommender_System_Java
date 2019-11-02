@@ -1,88 +1,148 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MovieList{
 
-    ArrayList<ArrayList<String>> allMovielist = new ArrayList<ArrayList<String>>();
-    ArrayList<String> actionlist =new ArrayList<String>();
-    ArrayList<String> comedylist =new ArrayList<String>();
-    ArrayList<String> romancelist =new ArrayList<String>();
-   ArrayList<String> horrorlist =new ArrayList<String>();
-    ArrayList<String> scifilist =new ArrayList<String>();
+    protected ArrayList<ArrayList<String>> allMovielist = new ArrayList<ArrayList<String>>();
+    protected ArrayList<String> handler =new ArrayList<String>();
+    protected SignUp user;
 
-    public void genreAdd()
+    public MovieList(SignUp signUp)
     {
-        actionlist.add("Watchman");
-        actionlist.add("Terminator: Dark Fate");
-        actionlist.add("Star Wars: The Rise of Skywalker");
-        actionlist.add("Zombieland: Double Tap");
-        actionlist.add("El Camino: A Breaking Bad Movie");
-        actionlist.add("Daybreak");
-        actionlist.add("Batwoman");
-        allMovielist.add(actionlist);
-        comedylist.add("The Laundromat");
-        comedylist.add("Living with Yourself ");
-        comedylist.add("Zombieland: Double Tap");
-        comedylist.add("Modern Love");
-        comedylist.add("Hocus Pocus");
-        comedylist.add("The Boys");
-        comedylist.add("Once Upon a Time in Hollywood");
-        allMovielist.add(comedylist);
-        romancelist.add("Game of Thrones");
-        romancelist.add("Big Mouth");
-        romancelist.add("Friends");
-        romancelist.add("The King");
-        romancelist.add("Maleficent");
-        romancelist.add("Vikings");
-        romancelist.add("Riverdale");
-        allMovielist.add(romancelist);
-        horrorlist.add("Zombieland: Double Tap");
-        horrorlist.add("The Walking Dead");
-        horrorlist.add("American Horror Story");
-        horrorlist.add("Supernatural");
-        horrorlist.add("It Chapter Two");
-        horrorlist.add("Stranger Things");
-        horrorlist.add("3 from Hell");
-        allMovielist.add(horrorlist);
-        scifilist.add("Watchmen");
-        scifilist.add("Star Wars: The Rise of Skywalker");
-        scifilist.add("Bloodshot");
-        scifilist.add("Arrow");
-        scifilist.add("The Flash");
-        scifilist.add("Avengers: Endgame");
-        scifilist.add("Black Mirror");
-        allMovielist.add(scifilist);
+        genreAdd();
+        user=signUp;
+        if(user.movieSeen==null)
+        {
+            user.movieSeen= new HashMap<String,Integer>();
+            intialValue();
+        }
     }
 
+    private void intialValue()
+    {
+         for(ArrayList<String> m:allMovielist){
+             user.movieSeen.put(m.get(0),0);
+         }
+     }
 
+    private void genreAdd()
+    {
+       addAction();
+       addComedy();
+       addRomance();
+       addHorror();
+       addSciFi();
+    }
 
-    public void SearchdisplayGenres(){
+    void SearchDisplayGenres(){
         System.out.println("Please Enter Your Choice:");
         System.out.println("1. Action 2.Comedy 3.Romance 4.Horror 5.SciFi");
     }
-    public void SearchdisplayMovies(int x){
-        switch(x){
-            case 1: for(int i=0;i<actionlist.size();i++){
-                System.out.print(actionlist);
+
+    void SearchDisplayMoviesThroughGenre(int x) throws Exception{
+        if (x >= 1 && x <= 5) {
+            for (int i = 0; i < allMovielist.get(x - 1).size(); i++) {
+                System.out.print(allMovielist.get(0).get(i));
             }
-            break;
-            case 2:
-                for(int i=0;i<comedylist.size();i++){
-                    System.out.print(comedylist.get(i) + "    ");
-                }
-                break;
-            case 3:  for(int i=0;i<romancelist.size();i++){
-                System.out.print(romancelist.get(i)+"   ");
-            }
-            break;
-            case 4: for(int i=0;i<horrorlist.size();i++){
-                System.out.print(horrorlist.get(i)+"    ");
-            }
-            break;
-            case 5: for(int i=0;i<scifilist.size();i++){
-                System.out.print(scifilist.get(i)+"     ");
-            }
-            break;
+        } else {
+            throw new Exception("Genre not found");// over here replace myexception object
         }
+    }
+
+    void SearchMovies(String s)
+    {
+        boolean x=true;
+        for(ArrayList<String> i:allMovielist)
+        {
+            for(String check:i)
+            {
+                if(check.equals(s))
+                {
+                    System.out.println("Movie Found SuccessFully");
+                    x=false;
+                    //code to add it to map
+                    return;
+                }
+            }
+        }
+        if(x)
+        {
+            System.out.println("No Such Movie Found");
+        }
+    }
+
+    private void addAction()
+    {
+        handler.add("Action Movies");
+        handler.add("Watchman");
+        handler.add("Terminator: Dark Fate");
+        handler.add("Star Wars: The Rise of Skywalker");
+        handler.add("Zombieland: Double Tap");
+        handler.add("El Camino: A Breaking Bad Movie");
+        handler.add("Daybreak");
+        handler.add("Batwoman");
+        allMovielist.add(handler);
+        handler=null;
+    }
+
+    private void addComedy()
+    {
+        handler =new ArrayList<String>();
+        handler.add("Comedy Movies");
+        handler.add("The Laundromat");
+        handler.add("Living with Yourself ");
+        handler.add("Zombieland: Double Tap");
+        handler.add("Modern Love");
+        handler.add("Hocus Pocus");
+        handler.add("The Boys");
+        handler.add("Once Upon a Time in Hollywood");
+        allMovielist.add(handler);
+        handler=null;
+    }
+
+    private void addRomance()
+    {
+        handler =new ArrayList<String>();
+        handler.add("Romantic Movies");
+        handler.add("Game of Thrones");
+        handler.add("Big Mouth");
+        handler.add("Friends");
+        handler.add("The King");
+        handler.add("Maleficent");
+        handler.add("Vikings");
+        handler.add("Riverdale");
+        allMovielist.add(handler);
+        handler=null;
+    }
+
+    private void addHorror()
+    {
+        handler =new ArrayList<String>();
+        handler.add("Horror Movies");
+        handler.add("Zombieland: Double Tap");
+        handler.add("The Walking Dead");
+        handler.add("American Horror Story");
+        handler.add("Supernatural");
+        handler.add("It Chapter Two");
+        handler.add("Stranger Things");
+        handler.add("3 from Hell");
+        allMovielist.add(handler);
+        handler=null;
+    }
+
+    private void addSciFi()
+    {
+        handler =new ArrayList<String>();
+        handler.add("Sci-Fi Movies");
+        handler.add("Watchmen");
+        handler.add("Star Wars: The Rise of Skywalker");
+        handler.add("Bloodshot");
+        handler.add("Arrow");
+        handler.add("The Flash");
+        handler.add("Avengers: Endgame");
+        handler.add("Black Mirror");
+        allMovielist.add(handler);
+        handler=null;
     }
 
 }

@@ -1,12 +1,14 @@
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Map;
 
 public abstract class User implements Serializable {
     protected String username;
    protected String email;
     protected String passwd;
     protected String phone;
+    protected Map<String,Integer> movieSeen;
    public abstract boolean usname(String a);
     public abstract boolean emal(String a) throws IOException, ClassNotFoundException;
     public abstract boolean pass(String a);
