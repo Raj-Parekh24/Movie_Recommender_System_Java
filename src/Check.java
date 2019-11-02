@@ -36,5 +36,9 @@ public class Check {
             us=sc.nextLine();
             ch=us1.Confirmpass(us);
         }
+        MovieList mw=new MovieList();
+        mw.SearchdisplayGenres();
+        int mv=sc.nextInt();
+        mw.SearchdisplayMovies(mv);
     }
 }
