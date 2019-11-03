@@ -1,3 +1,5 @@
+import java.io.EOFException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -18,7 +20,11 @@ public class Check {
                   break;
               }
               case 2:{
-                  Login lg=new Login();
+                  try {
+                      Login lg = new Login();
+                  }catch (FileNotFoundException ex){
+                      System.out.println("No one is registered till now.\nSo,please create accounts");
+                  }
                   break;
               }
               case 3: chk=false;

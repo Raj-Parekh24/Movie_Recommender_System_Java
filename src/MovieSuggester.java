@@ -78,7 +78,7 @@ public class MovieSuggester extends MovieList {
                 case 1: {
                     searchDisplayGenres();
                     int y=sc.nextInt();
-                   searchDisplayMoviesThroughGenre(y-1);
+                   searchDisplayMoviesThroughGenre(y);
                     break;
                 }
                 case 2:{
@@ -90,9 +90,13 @@ public class MovieSuggester extends MovieList {
                 case 3:{
                     System.out.println("Our Suggested Movies are :- ");
                     displaySuggestedMovies();
+                    askToPlay();
                     break;
                 }
-                case 4: chk=false;
+                default : {
+                    System.out.println("We are transferring you to main window :-");
+                    chk=false;
+                }
             }
         }while(chk);
     }
@@ -110,7 +114,7 @@ public class MovieSuggester extends MovieList {
         }
     }
 
-    void playMovie(String movieName,String[] suggested) throws IOException, ClassNotFoundException {
+    private void playMovie(String movieName, ArrayList<String> suggested) throws IOException, ClassNotFoundException {
         if(checkForSuggestedMovies(suggested,movieName)) {
             if (searchMoviesExist(movieName)) {
                 mapUpdate(getGenreType(movieName));
@@ -123,10 +127,32 @@ public class MovieSuggester extends MovieList {
         }
     }
 
-    private boolean checkForSuggestedMovies(String[] q,String movieName){
+    private void askToPlay() throws IOException, ClassNotFoundException {
+        Scanner sc=new Scanner(System.in);
+        boolean check=true;
+        do {
+            System.out.println("Enter 1 to watch more ;-\nEnter 2 to exit panel :-");
+          switch (sc.nextInt()){
+              case 1:{
+                  System.out.print("Enter the movie you wan to watch :- ");
+                  sc.skip("\n");
+                  String movieName = sc.nextLine();
+                  playMovie(movieName, getMovies());
+                  break;
+              }
+              default:{
+                  System.out.println("Terminatting");
+                  check=false;
+                  break;
+              }
+          }
+        }while (check);
+    }
+
+    private boolean checkForSuggestedMovies(ArrayList<String> q,String movieName){
         boolean a=false;
         for(String i:q){
-            if(q.equals(movieName)){
+            if(i.equals(movieName)){
                 a=true;
                 break;
             }

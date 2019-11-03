@@ -42,17 +42,20 @@ public class MovieList{
     }
 
     void searchDisplayMoviesThroughGenre(int x) throws Exception{
-        if (x >= 1 && x <= 5) {
-            for (int i = 0; i < allMovielist.get(x - 1).size(); i++) {
-                System.out.println(allMovielist.get(0).get(i));
+        //System.out.println(x);
+        if (x>=1 && x<=55) {
+            for (int i=1; i<allMovielist.get(x-1).size(); i++) {
+                System.out.println(allMovielist.get(x-1).get(i));
             }
-        } else {
+        }
+        else {
             throw new Exception("Genre not found");// over here replace myexception object
         }
+        //System.out.println(allMovielist.get(0).get(0));
+        mapUpdate(allMovielist.get(x-1).get(0));//over here it throws eof exception
     }
 
-    void searchMovies(String s)
-    {
+    void searchMovies(String s) throws IOException, ClassNotFoundException {
         boolean x=true;
         for(ArrayList<String> i:allMovielist)
         {
@@ -63,6 +66,7 @@ public class MovieList{
                     System.out.println("Movie Found SuccessFully");
                     x=false;
                     //code to add it to map
+                    mapUpdate(getGenreType(s));
                     return;
                 }
             }
@@ -82,7 +86,6 @@ public class MovieList{
             {
                 if(check.equals(s))
                 {
-                    System.out.println("Movie Found SuccessFully");
                     x=true;
                     //code to add it to map
                     break;
@@ -113,6 +116,9 @@ public class MovieList{
     }
 
     public void mapUpdate(String genre) throws IOException, ClassNotFoundException {
+        if(genre.equals("No such movie found")){
+            return;
+        }
         Map<String,Integer> userData=user.getMovieSeen();
         Map<String,Integer> update=new HashMap<String, Integer>();
         for (Map.Entry<String, Integer> entry : userData.entrySet()) {
@@ -124,6 +130,10 @@ public class MovieList{
            }
         }
         user.setMovieSeen(update);
+        update=user.getMovieSeen();
+        for(Map.Entry<String,Integer> x :update.entrySet()){
+            System.out.println(x.getKey()+"  "+x.getValue());
+        }
         WriteToFile writeToFile = new WriteToFile();
         writeToFile.fileWrite(writeToFile.readFile(),user,user.getEmail());
     }
