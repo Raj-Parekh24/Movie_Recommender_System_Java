@@ -1,5 +1,10 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class MovieSuggester extends MovieList {
     public MovieSuggester(SignUp signUp) {
@@ -41,7 +46,7 @@ public class MovieSuggester extends MovieList {
         ArrayList<String> y=new ArrayList<String>();
         if(movieSuggesttionSum()>=10) {
             for (int i = 0; i < 5; i++) {
-                int z = (int) (Math.random() * allMovielist.get(indexOfGenre()).size()) + 1;//since first is genre name and movie start form 1st index not 0
+                int z = (int) (Math.random() * (allMovielist.get(indexOfGenre()).size()-1)) + 1;//since first is genre name and movie start form 1st index not 0
                 y.add(allMovielist.get(indexOfGenre()).get(z));
             }
         }
@@ -56,11 +61,76 @@ public class MovieSuggester extends MovieList {
         ArrayList<String> y=new ArrayList<String>();
         for (int i = 0; i < 10; i++) {
             int z = (int)( Math.random() * allMovielist.size()) ;
-            int q=(int)(Math.random()*allMovielist.get(z).size())+1;//since first is genre name and movie start form 1st index not 0
+            int q=(int)(Math.random()*(allMovielist.get(z).size()-1))+1;//since first is genre name and movie start form 1st index not 0
             y.add(allMovielist.get(z).get(q));
         }
         return y;
     }
 
+    void getMenuDrive() throws Exception {
+        Scanner sc=new Scanner(System.in);
+        boolean chk=true;
+        clearScreen();
+        do{
+            System.out.println("For Movie Searching By type press 1 :-\nFor Movie Searching By name press 2:- \nFor Our Side recommendation press 3:- ");
+            int x=sc.nextInt();
+            switch(x){
+                case 1: {
+                    searchDisplayGenres();
+                    int y=sc.nextInt();
+                   searchDisplayMoviesThroughGenre(y-1);
+                    break;
+                }
+                case 2:{
+                    System.out.println("Enter movie you want to search");
+                    String movieName=sc.nextLine();
+                    searchMovies(movieName);
+                    break;
+                }
+                case 3:{
+                    System.out.println("Our Suggested Movies are :- ");
+                    displaySuggestedMovies();
+                    break;
+                }
+                case 4: chk=false;
+            }
+        }while(chk);
+    }
 
+    private void clearScreen() throws IOException,InterruptedException {
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+    }
+
+    private void displaySuggestedMovies()
+    {
+        ArrayList<String> rmovies=getMovies();
+        for(String i:rmovies)
+        {
+            System.out.println(i);
+        }
+    }
+
+    void playMovie(String movieName,String[] suggested) throws IOException, ClassNotFoundException {
+        if(checkForSuggestedMovies(suggested,movieName)) {
+            if (searchMoviesExist(movieName)) {
+                mapUpdate(getGenreType(movieName));
+            } else {
+                System.out.println("Please enter the correct name of movie as suggested");
+            }
+        }
+        else {
+            System.out.println("Please enter movie from suggested movie");
+        }
+    }
+
+    private boolean checkForSuggestedMovies(String[] q,String movieName){
+        boolean a=false;
+        for(String i:q){
+            if(q.equals(movieName)){
+                a=true;
+                break;
+            }
+        }
+        return a;
+    }
 }

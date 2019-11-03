@@ -43,4 +43,16 @@ class WriteToFile {
         oos.close();
         fos.close();
     }
+
+    void fileWrite(ArrayList<SignUp> al,SignUp signUp,String emailId) throws IOException {
+        FileOutputStream fos=new FileOutputStream(file);
+        ObjectOutputStream oos=new ObjectOutputStream(fos);
+        for(int i=0;i<al.size();i++){
+            if(al.get(i).getEmail().equals(emailId)){
+                al.remove(i);
+                al.add(i,signUp);
+            }
+        }
+
+    }
 }

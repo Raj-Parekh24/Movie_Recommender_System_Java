@@ -6,7 +6,6 @@ public class SignUp extends User  {
     private String ConfirmationString;
     private boolean rr = false;
     private SignUp us1;
-
    public boolean Confirmpass(String b) {
         if ((b.equals(ConfirmationString))) {
             setPasswd(b);
@@ -93,15 +92,18 @@ public class SignUp extends User  {
         if(f==0)
         {
             WriteToFile writeToFile=new WriteToFile();
-            ArrayList<SignUp> signUps=writeToFile.readFile();
-            for(SignUp signUp:signUps)
-            {
-                if(signUp.getEmail().equals(a))
-                {
-                    System.out.println("Account already exist");
-                    f=1;
-                    break;
+            try {
+                ArrayList<SignUp> signUps = writeToFile.readFile();
+                for (SignUp signUp : signUps) {
+                    if (signUp.getEmail().equals(a)) {
+                        System.out.println("Account already exist");
+                        f = 1;
+                        break;
+                    }
                 }
+            }catch (FileNotFoundException ex)
+            {
+               System.out.println("Welcome you are the first user.....");
             }
         }
         return f == 0;
@@ -158,11 +160,6 @@ public class SignUp extends User  {
         }
         if (f == 0) return true;
         else return false;
-    }
-
-    private boolean check()
-    {
-       return (username!=null&&email!=null&&passwd!=null&&phone!=null);
     }
 
     private void getUserName()
@@ -223,11 +220,12 @@ public class SignUp extends User  {
     }
 
     public void detailsToFile() throws IOException, ClassNotFoundException {
+       us1=new SignUp();
        getUserName();
        getPhoneNumber();
        getEmailUser();
        getPassword();
-       if(check()) {
+        {
            WriteToFile writeToFile = new WriteToFile();
            try {
                writeToFile.fileWrite(writeToFile.readFile(), us1);
@@ -236,9 +234,6 @@ public class SignUp extends User  {
            } catch (FileNotFoundException ex) {
                writeToFile.writeSingle(us1);
            }
-       }
-       else {
-           System.out.println("Please fill all the fields");
        }
     }
 

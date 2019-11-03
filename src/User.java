@@ -10,8 +10,11 @@ public abstract class User implements Serializable {
     protected String phone;
     protected Map<String,Integer> movieSeen;
     protected boolean loginStatus=false;
+
    public abstract boolean usname(String a);
+
     public abstract boolean emal(String a) throws IOException, ClassNotFoundException;
+
     public abstract boolean pass(String a);
 
     public String getUsername() {
@@ -63,5 +66,6 @@ public abstract class User implements Serializable {
     }
 
     public abstract boolean pho(String a);
+
     public abstract boolean Confirmpass(String a);
 }

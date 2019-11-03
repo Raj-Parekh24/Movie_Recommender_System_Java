@@ -1,5 +1,7 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MovieList{
 
@@ -34,22 +36,22 @@ public class MovieList{
        addSciFi();
     }
 
-    void SearchDisplayGenres(){
+    void searchDisplayGenres(){
         System.out.println("Please Enter Your Choice:");
         System.out.println("1. Action 2.Comedy 3.Romance 4.Horror 5.SciFi");
     }
 
-    void SearchDisplayMoviesThroughGenre(int x) throws Exception{
+    void searchDisplayMoviesThroughGenre(int x) throws Exception{
         if (x >= 1 && x <= 5) {
             for (int i = 0; i < allMovielist.get(x - 1).size(); i++) {
-                System.out.print(allMovielist.get(0).get(i));
+                System.out.println(allMovielist.get(0).get(i));
             }
         } else {
             throw new Exception("Genre not found");// over here replace myexception object
         }
     }
 
-    void SearchMovies(String s)
+    void searchMovies(String s)
     {
         boolean x=true;
         for(ArrayList<String> i:allMovielist)
@@ -69,6 +71,61 @@ public class MovieList{
         {
             System.out.println("No Such Movie Found");
         }
+    }
+
+    boolean searchMoviesExist(String s)
+    {
+        boolean x=false;
+        for(ArrayList<String> i:allMovielist)
+        {
+            for(String check:i)
+            {
+                if(check.equals(s))
+                {
+                    System.out.println("Movie Found SuccessFully");
+                    x=true;
+                    //code to add it to map
+                    break;
+                }
+            }
+        }
+        return x;
+    }
+
+    public String getGenreType(String movie)
+    {
+        String s=null;
+        for(ArrayList<String> x:allMovielist)
+        {
+            for(String i:x)
+            {
+                if(i.equals(movie))
+                {
+                    s= x.get(0);
+                    break;
+                }
+            }
+        }
+        if(s==null) {
+            return "No such movie found";
+        }
+        else return s;
+    }
+
+    public void mapUpdate(String genre) throws IOException, ClassNotFoundException {
+        Map<String,Integer> userData=user.getMovieSeen();
+        Map<String,Integer> update=new HashMap<String, Integer>();
+        for (Map.Entry<String, Integer> entry : userData.entrySet()) {
+           if(entry.getKey().equals(genre)){
+               update.put(entry.getKey(),entry.getValue()+1);
+           }
+           else {
+               update.put(entry.getKey(),entry.getValue());
+           }
+        }
+        user.setMovieSeen(update);
+        WriteToFile writeToFile = new WriteToFile();
+        writeToFile.fileWrite(writeToFile.readFile(),user,user.getEmail());
     }
 
     private void addAction()

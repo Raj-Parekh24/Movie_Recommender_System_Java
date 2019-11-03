@@ -6,32 +6,46 @@ class Login {
     private String uemail,upassword;
     private WriteToFile writeToFile=new WriteToFile();
 
-    Login(String uemail, String upassword) {
-        this.uemail = uemail;
-        this.upassword = upassword;
+    Login() throws Exception {
+        Scanner sc=new Scanner(System.in);
+        if(checkForUserSignedIn()){
+            System.out.println("Some user is already signed in");
+            System.out.println("Press 1 to sign out :- \nElse we are closing the application");
+            int c=sc.nextInt();
+            if(c==1)
+            {
+                signOut();
+            }
+            else {
+                System.out.println("Terminatting");
+                System.exit(0);
+            }
+        }
+        else {
+            getDetailsFromUser();
+            searchEmailId();
+        }
     }
-    void searchEmailId() throws IOException, ClassNotFoundException {
+
+    void searchEmailId() throws Exception {
         ArrayList<SignUp> signUps = writeToFile.readFile();
         boolean checke = true, checkp = true;
         int index=0;
-       if(checkForUserSignedIn())//check wether some user is their or not
-       {
-           System.out.println("Some user has already logged in. ");
-       }
-       else {
            do {
                for (SignUp i : signUps) {
-                   if (i.getEmail().equals(uemail)) {
+                   if (i.getEmail().equals(getUemail())) {
                        do {
                            checke=false;
-                           if (i.getPasswd().equals(upassword)) {
+                           if (i.getPasswd().equals(getUpassword())) {
                                checkp = false;
                                System.out.println("Logged in successfully");
                                i.setLoginStatus(true);
                                writeToFile.fileWrite(writeToFile.readFile(),i,index);//this will make changes to file
-
+                               MovieSuggester movieSuggester=new MovieSuggester(i);
+                               movieSuggester.getMenuDrive();
                                break;
-                           } else {
+                           }
+                           else {
                                System.out.println("Please enter your password correctly");
                                Scanner s = new Scanner(System.in);
                                upassword = s.nextLine();
@@ -45,12 +59,12 @@ class Login {
                    System.out.println("Please enter your email id correctly");
                    Scanner s = new Scanner(System.in);
                    uemail = s.nextLine();
+                   index=0;
                }
            } while(checke);
-       }
     }
 
-    private boolean checkForUserSignedIn() throws IOException, ClassNotFoundException {
+    public boolean checkForUserSignedIn() throws IOException, ClassNotFoundException {
         boolean a=false;
         ArrayList<SignUp> users=writeToFile.readFile();
         for(SignUp i:users)
@@ -62,5 +76,44 @@ class Login {
         }
         return a;
     }
+
+    private void getDetailsFromUser()
+    {
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter your registered email id :- ");
+        setUemail(sc.nextLine());
+        System.out.println("Enter your password :-");
+        setUpassword(sc.nextLine());
+    }
+
+    public String getUemail() {
+        return uemail;
+    }
+
+    public void setUemail(String uemail) {
+        this.uemail = uemail;
+    }
+
+    public String getUpassword() {
+        return upassword;
+    }
+
+    public void setUpassword(String upassword) {
+        this.upassword = upassword;
+    }
+
+    public void signOut() throws IOException, ClassNotFoundException {
+        boolean a=false;
+        ArrayList<SignUp> users=writeToFile.readFile();
+        for(int i=0;i<users.size();i++)
+        {
+            if(users.get(i).isLoginStatus())
+            {
+                users.get(i).setLoginStatus(false);
+                writeToFile.fileWrite(writeToFile.readFile(),users.get(i),i);
+            }
+        }
+    }
+
 
 }
