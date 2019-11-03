@@ -33,4 +33,14 @@ class WriteToFile {
        fis.close();
        return signUps;
     }
+
+    void fileWrite(ArrayList<SignUp> al,SignUp signUp,int index) throws IOException, ClassNotFoundException {
+        FileOutputStream fos=new FileOutputStream(file);
+        ObjectOutputStream oos=new ObjectOutputStream(fos);
+        al.remove(index);
+        al.add(index,signUp);
+        oos.writeObject(al);
+        oos.close();
+        fos.close();
+    }
 }

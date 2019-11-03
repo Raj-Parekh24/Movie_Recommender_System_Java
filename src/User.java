@@ -46,6 +46,22 @@ public abstract class User implements Serializable {
         this.phone = phone;
     }
 
+    public Map<String, Integer> getMovieSeen() {
+        return movieSeen;
+    }
+
+    public void setMovieSeen(Map<String, Integer> movieSeen) {
+        this.movieSeen = movieSeen;
+    }
+
+    public boolean isLoginStatus() {
+        return loginStatus;
+    }
+
+    public void setLoginStatus(boolean loginStatus) {
+        this.loginStatus = loginStatus;
+    }
+
     public abstract boolean pho(String a);
     public abstract boolean Confirmpass(String a);
 }
