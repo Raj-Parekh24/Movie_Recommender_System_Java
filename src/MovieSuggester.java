@@ -7,6 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class MovieSuggester extends MovieList {
+    private ArrayList<String> moviesWatch;
     public MovieSuggester(SignUp signUp) {
         super(signUp);
     }
@@ -36,27 +37,27 @@ public class MovieSuggester extends MovieList {
         String favGenre=null;
             for (Map.Entry<String, Integer> entry : user.movieSeen.entrySet()) {
                 if (max <= entry.getValue()) {
+                    max=entry.getValue();
                     favGenre = entry.getKey();
                 }
             }
         return favGenre;
     }
-
-    public ArrayList<String> getMovies()  {
-        ArrayList<String> y=new ArrayList<String>();
+    ///Executable Main METHOD
+    public void  getMovies()  {
+        moviesWatch=new ArrayList<String>();
         if(movieSuggesttionSum()>=10) {
             for (int i = 0; i < 5; i++) {
                 int z = (int) (Math.random() * (allMovielist.get(indexOfGenre()).size()-1)) + 1;//since first is genre name and movie start form 1st index not 0
-                y.add(allMovielist.get(indexOfGenre()).get(z));
+                moviesWatch.add(allMovielist.get(indexOfGenre()).get(z));
             }
         }
         else {
-            y=getStartSuggestion();
+            moviesWatch=getStartSuggestion();
         }
-        return y;
     }
 
-    private ArrayList<String> getStartSuggestion()
+    public ArrayList<String> getStartSuggestion()
     {
         ArrayList<String> y=new ArrayList<String>();
         for (int i = 0; i < 10; i++) {
@@ -83,13 +84,15 @@ public class MovieSuggester extends MovieList {
                 }
                 case 2:{
                     System.out.println("Enter movie you want to search");
+                    sc.skip("\n");
                     String movieName=sc.nextLine();
                     searchMovies(movieName);
                     break;
                 }
                 case 3:{
                     System.out.println("Our Suggested Movies are :- ");
-                    displaySuggestedMovies();
+                    getMovies();
+                    displaySuggestedMovies(moviesWatch);
                     askToPlay();
                     break;
                 }
@@ -105,10 +108,9 @@ public class MovieSuggester extends MovieList {
         new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
     }
 
-    private void displaySuggestedMovies()
+    private void displaySuggestedMovies(ArrayList<String> movieq)
     {
-        ArrayList<String> rmovies=getMovies();
-        for(String i:rmovies)
+        for(String i:movieq)
         {
             System.out.println(i);
         }
@@ -137,7 +139,7 @@ public class MovieSuggester extends MovieList {
                   System.out.print("Enter the movie you wan to watch :- ");
                   sc.skip("\n");
                   String movieName = sc.nextLine();
-                  playMovie(movieName, getMovies());
+                  playMovie(movieName, moviesWatch);
                   break;
               }
               default:{
