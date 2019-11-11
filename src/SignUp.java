@@ -65,10 +65,15 @@ public class SignUp extends User  {
 
     private boolean domain(String a) {
         String b = "@gmail.com";
+        String cc= "@nirmauni.ac.in";
         int c = 0;
         boolean r = true;
         if(!a.contains(b))
-            r=false;
+            if(!a.contains(cc))
+                r=false;
+         else if(!a.contains(cc))
+             if(!a.contains(b))
+                 r=false;
         return r;
     }
 
@@ -103,7 +108,7 @@ public class SignUp extends User  {
                 }
             }catch (FileNotFoundException ex)
             {
-               System.out.println("Welcome you are the first user.....");
+               System.out.println("Welcome you are the First User.....");
             }
         }
         return f == 0;
@@ -169,7 +174,7 @@ public class SignUp extends User  {
         String us;
 
         while(!ch){
-            System.out.print("Enter a Username :- ");
+            System.out.println("Enter a Username :- ");
             us=sc.nextLine();
             ch=us1.usname(us);
         }
@@ -182,7 +187,7 @@ public class SignUp extends User  {
         String us;
 
         while(!ch){
-            System.out.print("Enter a Phone number :-");
+            System.out.println("Enter a Phone number :-");
             us=sc.nextLine();
             ch=us1.pho(us);
         }
@@ -194,7 +199,7 @@ public class SignUp extends User  {
         String us;
 
         while(!ch){
-            System.out.print("Enter a Email Address :-");
+            System.out.println("Enter a Email Address :-");
             us=sc.nextLine();
             ch=us1.emal(us);
         }
@@ -207,13 +212,13 @@ public class SignUp extends User  {
         String us;
 
         while (!ch) {
-            System.out.print("Enter a Password :- ");
+            System.out.println("Enter a Password :- ");
             us = sc.nextLine();
             ch = us1.pass(us);
         }
         ch=false;
         while (!ch) {
-            System.out.print("Confirm Your Password :-");
+            System.out.println("Confirm Your Password :-");
             us = sc.nextLine();
             ch = us1.Confirmpass(us);
         }

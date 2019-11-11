@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class MovieList{
 
@@ -52,11 +53,26 @@ public class MovieList{
             throw new Exception("Genre not found");// over here replace myexception object
         }
         //System.out.println(allMovielist.get(0).get(0));
-        mapUpdate(allMovielist.get(x-1).get(0));//over here it throws eof exception
+        play((allMovielist.get(x-1).get(0)));
+        //over here it throws eof exception
     }
-
-    void searchMovies(String s) throws IOException, ClassNotFoundException {
+    boolean play(String mvname) throws IOException, ClassNotFoundException {
+        boolean r=false;
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Do you Want to Play it: 1.YES  2.NO ");
+        int x=sc.nextInt();
+        if(x==1) {
+            mapUpdate(mvname);
+            r = false;
+        }
+        else{
+            System.out.println("We are directing you to Main Menu");
+            r=true;
+        }return r;
+    }
+    boolean searchMovies(String s) throws IOException, ClassNotFoundException {
         boolean x=true;
+        boolean r=false;
         for(ArrayList<String> i:allMovielist)
         {
             for(String check:i)
@@ -66,8 +82,11 @@ public class MovieList{
                     System.out.println("Movie Found SuccessFully");
                     x=false;
                     //code to add it to map
-                    mapUpdate(getGenreType(s));
-                    return;
+                    String a=getGenreType(s);
+                    System.out.println("It is of "+a+" Genre");
+                    if(play(a))
+                        r=true;
+
                 }
             }
         }
@@ -75,6 +94,7 @@ public class MovieList{
         {
             System.out.println("No Such Movie Found");
         }
+        return r;
     }
 
     boolean searchMoviesExist(String s)
@@ -208,6 +228,10 @@ public class MovieList{
         handler.add("The Flash");
         handler.add("Avengers: Endgame");
         handler.add("Black Mirror");
+        handler.add("InterStellar");
+        handler.add("Inception");
+        handler.add("Arrival");
+        handler.add("Ad Stra");
         allMovielist.add(handler);
         handler=null;
     }

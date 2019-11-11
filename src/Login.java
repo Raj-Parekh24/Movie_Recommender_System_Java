@@ -9,8 +9,8 @@ class Login {
     Login() throws Exception {
         Scanner sc=new Scanner(System.in);
         if(checkForUserSignedIn()){
-            System.out.println("Some user is already signed in");
-            System.out.println("Press 1 to sign out :- \nElse we are closing the application");
+            System.out.println("Some User is Already Signed in");
+            System.out.println("SIGN OUT Press 1 :- \nElse we are closing the application");
             int c=sc.nextInt();
             if(c==1)
             {
@@ -38,7 +38,7 @@ class Login {
                            checke=false;
                            if (i.getPasswd().equals(getUpassword())) {
                                checkp = false;
-                               System.out.println("Logged in successfully");
+                               System.out.println("Logged in Successfully");
                                i.setLoginStatus(true);
                                writeToFile.fileWrite(writeToFile.readFile(),i,index);//this will make changes to file
                                MovieSuggester movieSuggester=new MovieSuggester(i);

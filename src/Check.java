@@ -9,10 +9,18 @@ public class Check {
     public static void main(String[] args) throws Exception {
       Scanner sc=new Scanner(System.in);
       boolean chk=true;
-      do{
+      do    {
           clearScreen();
-          System.out.println("For Sign Up press 1 :-\nFor login press 2:- \nFor quit press 3:- ");
+          System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+          System.out.println("SIGN UP press 1   |   LOGIN press 2   |    QUIT press 3:- ");
+          System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
           int x=sc.nextInt();
+          try{
+              if(x!=1 && x!=2 && x!=3)
+                  throw new Exception("Please Enter a Valid Input!");
+          }catch (Exception e){
+              System.out.println(e.getMessage());
+          }
           switch(x){
               case 1: {
                   SignUp sp=new SignUp();
@@ -23,7 +31,7 @@ public class Check {
                   try {
                       Login lg = new Login();
                   }catch (FileNotFoundException ex){
-                      System.out.println("No one is registered till now.\nSo,please create accounts");
+                      System.out.println("No One is Registered till now.\nSo,Please Create a account");
                   }
                   break;
               }

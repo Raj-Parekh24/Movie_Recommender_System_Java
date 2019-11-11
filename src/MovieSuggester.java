@@ -73,12 +73,26 @@ public class MovieSuggester extends MovieList {
         boolean chk=true;
         clearScreen();
         do{
-            System.out.println("For Movie Searching By type press 1 :-\nFor Movie Searching By name press 2:- \nFor Our Side recommendation press 3:- ");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("BROWSE OUR MOVIES press 1   |   SEARCH OUR MOVIES press 2   |   OUR MOVIE RECOMMENDATIONS press 3   |   GO TO MAIN WINDOW press 4:- ");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             int x=sc.nextInt();
+            try{
+                if(x!=1 && x!=2 && x!=3 && x!=4)
+                    throw new Exception("Please Enter a Valid Input!");
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
             switch(x){
                 case 1: {
                     searchDisplayGenres();
                     int y=sc.nextInt();
+                    try{
+                        if(y!=1 && y!=2 && y!=3 && y!=4 && y!=5)
+                            throw new Exception("Please Enter a Valid Input!");
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                    searchDisplayMoviesThroughGenre(y);
                     break;
                 }
@@ -86,7 +100,8 @@ public class MovieSuggester extends MovieList {
                     System.out.println("Enter movie you want to search");
                     sc.skip("\n");
                     String movieName=sc.nextLine();
-                    searchMovies(movieName);
+                    if(searchMovies(movieName))
+                        continue;
                     break;
                 }
                 case 3:{
@@ -96,13 +111,15 @@ public class MovieSuggester extends MovieList {
                     askToPlay();
                     break;
                 }
-                default : {
+                case 4: {
                     System.out.println("We are transferring you to main window :-");
                     chk=false;
                 }
+
             }
         }while(chk);
     }
+
 
     private void clearScreen() throws IOException,InterruptedException {
         new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -120,6 +137,7 @@ public class MovieSuggester extends MovieList {
         if(checkForSuggestedMovies(suggested,movieName)) {
             if (searchMoviesExist(movieName)) {
                 mapUpdate(getGenreType(movieName));
+                play(getGenreType(movieName));
             } else {
                 System.out.println("Please enter the correct name of movie as suggested");
             }
@@ -133,10 +151,19 @@ public class MovieSuggester extends MovieList {
         Scanner sc=new Scanner(System.in);
         boolean check=true;
         do {
-            System.out.println("Enter 1 to watch more ;-\nEnter 2 to exit panel :-");
-          switch (sc.nextInt()){
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("WATCH MOVIE press 1   |   EXIT PANEL press 2:-");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            int d=sc.nextInt();
+            try{//Input mismatch Exception
+                if(d!=1 && d!=2 )
+                    throw new Exception("Please Enter a Valid Input!");
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+          switch (d){
               case 1:{
-                  System.out.print("Enter the movie you wan to watch :- ");
+                  System.out.print("Enter the movie you want to watch :- ");
                   sc.skip("\n");
                   String movieName = sc.nextLine();
                   playMovie(movieName, moviesWatch);
