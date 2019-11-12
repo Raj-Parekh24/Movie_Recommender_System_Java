@@ -306,7 +306,7 @@ public class MovieList{
         handler=null;
     }
 
-    void delay(String s,int x){
+    void delay(String s,int x) throws IOException, InterruptedException {
         Thread thread=new Thread(new Runnable() {
             @Override
             public void run() {
@@ -334,6 +334,7 @@ public class MovieList{
         });
         thread.setPriority(5);
         thread.start();
+        clearScreen();
     }
 
     void clearScreen() throws IOException,InterruptedException {

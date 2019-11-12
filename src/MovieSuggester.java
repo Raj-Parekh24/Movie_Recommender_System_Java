@@ -87,15 +87,15 @@ public class MovieSuggester extends MovieList {
                     clearScreen();
                     searchDisplayGenres();
                     int y=sc.nextInt();
-                    delay("Loading",5);
-                    Thread.sleep(7000);
-                    clearScreen();
                     try{
                         if(y!=1 && y!=2 && y!=3 && y!=4 && y!=5)
                             throw new Exception("Please Enter a Valid Input!");
                     }catch (Exception e){
                         System.out.println(e.getMessage());
                     }
+                    delay("Loading",5);
+                    Thread.sleep(7000);
+                    clearScreen();
                    searchDisplayMoviesThroughGenre(y);
                    clearScreen();
                     break;
@@ -108,7 +108,6 @@ public class MovieSuggester extends MovieList {
                     String movieName=br.readLine();
                     delay("Searching",3);
                     Thread.sleep(5000);
-                    clearScreen();
                     if(searchMovies(movieName))
                         continue;
                     clearScreen();
