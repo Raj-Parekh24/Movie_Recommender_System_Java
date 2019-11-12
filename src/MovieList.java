@@ -56,7 +56,7 @@ public class MovieList{
         play((allMovielist.get(x-1).get(0)));
         //over here it throws eof exception
     }
-    boolean play(String mvname) throws IOException, ClassNotFoundException {
+    boolean play(String mvname) throws IOException, ClassNotFoundException, InterruptedException {
         boolean r=false;
         Scanner sc=new Scanner(System.in);
         System.out.println("Do you Want to Play it: 1.YES  2.NO ");
@@ -70,7 +70,7 @@ public class MovieList{
             r=true;
         }return r;
     }
-    boolean searchMovies(String s) throws IOException, ClassNotFoundException {
+    boolean searchMovies(String s) throws IOException, ClassNotFoundException, InterruptedException {
         boolean x=true;
         boolean r=false;
         for(ArrayList<String> i:allMovielist)
@@ -151,9 +151,9 @@ public class MovieList{
         }
         user.setMovieSeen(update);
         update=user.getMovieSeen();
-        for(Map.Entry<String,Integer> x :update.entrySet()){
+        /*for(Map.Entry<String,Integer> x :update.entrySet()){
             System.out.println(x.getKey()+"  "+x.getValue());
-        }
+        }*/
         WriteToFile writeToFile = new WriteToFile();
         writeToFile.fileWrite(writeToFile.readFile(),user,user.getEmail());
     }
@@ -167,6 +167,23 @@ public class MovieList{
         handler.add("Zombieland: Double Tap");
         handler.add("El Camino: A Breaking Bad Movie");
         handler.add("Daybreak");
+        handler.add("Equillibrium");
+        handler.add("Running Scared");
+        handler.add("Fast & Furious");
+        handler.add("Unstoppable");
+        handler.add("Shaft");
+        handler.add("Die Hard");
+        handler.add("Mission Impossible");
+        handler.add("Revenge");
+        handler.add("A touch of Zen");
+        handler.add("Con Air");
+        handler.add("Top Gun");
+        handler.add("Expendables");
+        handler.add("Rush Hour");
+        handler.add("Air Force One");
+        handler.add("Tekken");
+        handler.add("Blade");
+        handler.add("Bad Boys");
         handler.add("Batwoman");
         allMovielist.add(handler);
         handler=null;
@@ -182,7 +199,21 @@ public class MovieList{
         handler.add("Modern Love");
         handler.add("Hocus Pocus");
         handler.add("The Boys");
+        handler.add("Dhammal");
+        handler.add("Hera Pheri");
+        handler.add("Phir Hera Pheri");
+        handler.add("Munna Bhai M.B.B.S");
+        handler.add("3 idiots");
+        handler.add("Gol Maal");
+        handler.add("Deadpool");
+        handler.add("The Dictator");
+        handler.add("Superbad");
         handler.add("Once Upon a Time in Hollywood");
+        handler.add("Ted");
+        handler.add("Zombieland");
+        handler.add("Wedding Crashers");
+        handler.add("Yes man");
+        handler.add("Euro Trip");
         allMovielist.add(handler);
         handler=null;
     }
@@ -198,6 +229,19 @@ public class MovieList{
         handler.add("Maleficent");
         handler.add("Vikings");
         handler.add("Riverdale");
+        handler.add("Crazy Rich Asians");
+        handler.add("Me Before You");
+        handler.add("Veer Zara");
+        handler.add("Fanna");
+        handler.add("Titanic");
+        handler.add("The Vow");
+        handler.add("Dilwale");
+        handler.add("Before Midnight");
+        handler.add("The Proposal");
+        handler.add("Roy");
+        handler.add("Dilwale Dulhaniya Le Jayenge");
+        handler.add("27 Dresses");
+        handler.add("The Holiday");
         allMovielist.add(handler);
         handler=null;
     }
@@ -210,9 +254,22 @@ public class MovieList{
         handler.add("The Walking Dead");
         handler.add("American Horror Story");
         handler.add("Supernatural");
+        handler.add("It");
+        handler.add("The Nun");
+        handler.add("Conjuring");
+        handler.add("Conjuring 2");
+        handler.add("Annabella");
+        handler.add("Halloween");
+        handler.add("It Follows");
+        handler.add("Ready Or Not");
+        handler.add("Us");
+        handler.add("Don't Breathe");
         handler.add("It Chapter Two");
         handler.add("Stranger Things");
         handler.add("3 from Hell");
+        handler.add("Split");
+        handler.add("Train to Busan");
+        handler.add("Insidious");
         allMovielist.add(handler);
         handler=null;
     }
@@ -231,9 +288,56 @@ public class MovieList{
         handler.add("InterStellar");
         handler.add("Inception");
         handler.add("Arrival");
+        handler.add("Martian");
+        handler.add("Iron Man");
+        handler.add("Spiderman");
+        handler.add("Hulk");
+        handler.add("Terminator");
+        handler.add("Robot");
+        handler.add("Transformer");
+        handler.add("Edge of tomorrow");
+        handler.add("Gravity");
+        handler.add("Looper");
+        handler.add("Sorce Code");
+        handler.add("Snowden");
+        handler.add("Wall-E");
         handler.add("Ad Stra");
         allMovielist.add(handler);
         handler=null;
+    }
+
+    void delay(String s,int x){
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0;i<x;i++){
+                    {
+                        try {
+                            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.print(s);
+                        for(int j=0;j<(i+1)*10;j++){
+                            System.out.print(".");
+                        }
+                        try {
+                            Thread.sleep(i*1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+        thread.setPriority(5);
+        thread.start();
+    }
+
+    void clearScreen() throws IOException,InterruptedException {
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
     }
 
 }

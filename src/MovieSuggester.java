@@ -1,10 +1,9 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class MovieSuggester extends MovieList {
     private ArrayList<String> moviesWatch;
@@ -85,8 +84,12 @@ public class MovieSuggester extends MovieList {
             }
             switch(x){
                 case 1: {
+                    clearScreen();
                     searchDisplayGenres();
                     int y=sc.nextInt();
+                    delay("Loading",5);
+                    Thread.sleep(7000);
+                    clearScreen();
                     try{
                         if(y!=1 && y!=2 && y!=3 && y!=4 && y!=5)
                             throw new Exception("Please Enter a Valid Input!");
@@ -94,35 +97,44 @@ public class MovieSuggester extends MovieList {
                         System.out.println(e.getMessage());
                     }
                    searchDisplayMoviesThroughGenre(y);
+                   clearScreen();
                     break;
                 }
                 case 2:{
+                    clearScreen();
                     System.out.println("Enter movie you want to search");
-                    sc.skip("\n");
-                    String movieName=sc.nextLine();
+                    BufferedReader br = new BufferedReader(new
+                            InputStreamReader(System.in));
+                    String movieName=br.readLine();
+                    delay("Searching",3);
+                    Thread.sleep(5000);
+                    clearScreen();
                     if(searchMovies(movieName))
                         continue;
+                    clearScreen();
                     break;
                 }
                 case 3:{
+                    clearScreen();
+                    delay("Loading",5);
+                    Thread.sleep(7000);
+                    clearScreen();
                     System.out.println("Our Suggested Movies are :- ");
                     getMovies();
                     displaySuggestedMovies(moviesWatch);
                     askToPlay();
+                    clearScreen();
                     break;
                 }
                 case 4: {
+                    clearScreen();
                     System.out.println("We are transferring you to main window :-");
+                    clearScreen();
                     chk=false;
                 }
 
             }
         }while(chk);
-    }
-
-
-    private void clearScreen() throws IOException,InterruptedException {
-        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
     }
 
     private void displaySuggestedMovies(ArrayList<String> movieq)
@@ -133,10 +145,10 @@ public class MovieSuggester extends MovieList {
         }
     }
 
-    private void playMovie(String movieName, ArrayList<String> suggested) throws IOException, ClassNotFoundException {
+    private void playMovie(String movieName, ArrayList<String> suggested) throws IOException, ClassNotFoundException, InterruptedException {
         if(checkForSuggestedMovies(suggested,movieName)) {
             if (searchMoviesExist(movieName)) {
-                mapUpdate(getGenreType(movieName));
+               // mapUpdate(getGenreType(movieName));
                 play(getGenreType(movieName));
             } else {
                 System.out.println("Please enter the correct name of movie as suggested");
@@ -147,7 +159,7 @@ public class MovieSuggester extends MovieList {
         }
     }
 
-    private void askToPlay() throws IOException, ClassNotFoundException {
+    private void askToPlay() throws IOException, ClassNotFoundException, InterruptedException {
         Scanner sc=new Scanner(System.in);
         boolean check=true;
         do {
@@ -164,8 +176,10 @@ public class MovieSuggester extends MovieList {
           switch (d){
               case 1:{
                   System.out.print("Enter the movie you want to watch :- ");
-                  sc.skip("\n");
-                  String movieName = sc.nextLine();
+                 // sc.skip("[\n]");
+                  BufferedReader br = new BufferedReader(new
+                          InputStreamReader(System.in));
+                  String movieName = br.readLine();
                   playMovie(movieName, moviesWatch);
                   break;
               }

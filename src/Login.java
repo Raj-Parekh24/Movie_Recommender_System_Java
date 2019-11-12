@@ -9,11 +9,15 @@ class Login {
     Login() throws Exception {
         Scanner sc=new Scanner(System.in);
         if(checkForUserSignedIn()){
+            clearScreen();
             System.out.println("Some User is Already Signed in");
             System.out.println("SIGN OUT Press 1 :- \nElse we are closing the application");
             int c=sc.nextInt();
             if(c==1)
             {
+                delay("Signing Out",2);
+                Thread.sleep(4000);
+                clearScreen();
                 signOut();
             }
             else {
@@ -38,6 +42,9 @@ class Login {
                            checke=false;
                            if (i.getPasswd().equals(getUpassword())) {
                                checkp = false;
+                               delay("Authenticating",5);
+                               Thread.sleep(7000);
+                               clearScreen();
                                System.out.println("Logged in Successfully");
                                i.setLoginStatus(true);
                                writeToFile.fileWrite(writeToFile.readFile(),i,index);//this will make changes to file
@@ -115,5 +122,38 @@ class Login {
         }
     }
 
+    private void clearScreen() throws IOException,InterruptedException {
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+    }
+
+    void delay(String s,int x){
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0;i<x;i++){
+                    {
+                        try {
+                            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.print(s);
+                        for(int j=0;j<(i+1)*10;j++){
+                            System.out.print(".");
+                        }
+                        try {
+                            Thread.sleep(i*1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+        thread.setPriority(5);
+        thread.start();
+    }
 
 }

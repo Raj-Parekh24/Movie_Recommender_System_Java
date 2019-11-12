@@ -64,16 +64,14 @@ public class SignUp extends User  {
     }
 
     private boolean domain(String a) {
-        String b = "@gmail.com";
-        String cc= "@nirmauni.ac.in";
-        int c = 0;
-        boolean r = true;
-        if(!a.contains(b))
-            if(!a.contains(cc))
-                r=false;
-         else if(!a.contains(cc))
-             if(!a.contains(b))
-                 r=false;
+        String[] domains={"@gmail.com","@nirmauni.ac.in","@yahoo.com","@outlook.com","@hotmail.com","@rediff.com","@icloud.com"};
+        boolean r = false;
+        for(String i:domains){
+            if(a.contains(i)){
+                r=true;
+                break;
+            }
+        }
         return r;
     }
 
