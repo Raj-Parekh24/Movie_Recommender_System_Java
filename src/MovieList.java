@@ -44,16 +44,13 @@ public class MovieList{
 
     void searchDisplayMoviesThroughGenre(int x) throws Exception{
         //System.out.println(x);
-        if (x>=1 && x<=55) {
+        if (x>=1 && x<=5) {
             for (int i=1; i<allMovielist.get(x-1).size(); i++) {
                 System.out.println(allMovielist.get(x-1).get(i));
             }
-        }
-        else {
-            throw new Exception("Genre not found");// over here replace myexception object
+            play((allMovielist.get(x-1).get(0)));
         }
         //System.out.println(allMovielist.get(0).get(0));
-        play((allMovielist.get(x-1).get(0)));
         //over here it throws eof exception
     }
     boolean play(String mvname) throws IOException, ClassNotFoundException, InterruptedException {

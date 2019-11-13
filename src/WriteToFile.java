@@ -1,7 +1,5 @@
 import java.io.*;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 class WriteToFile {
     private File file=new File("D:\\Users.txt");

@@ -11,9 +11,19 @@ class Login {
         if(checkForUserSignedIn()){
             clearScreen();
             System.out.println("Some User is Already Signed in");
-            System.out.println("SIGN OUT Press 1 :- \nElse we are closing the application");
+            System.out.println("Continue with current account Press 1 :- \nFor Sign Out press 2:- \nElse we are closing the application");
             int c=sc.nextInt();
-            if(c==1)
+            if(c==1){
+                if(getUsers()==null){
+                    System.out.println("Any user has not been logged in");
+                }
+                else {
+                    MovieSuggester movieSuggester=new MovieSuggester(getUsers());
+                    movieSuggester.getMenuDrive();
+                    return;
+                }
+            }
+            if(c==2)
             {
                 delay("Signing Out",2);
                 Thread.sleep(4000);
@@ -120,6 +130,21 @@ class Login {
                 writeToFile.fileWrite(writeToFile.readFile(),users.get(i),i);
             }
         }
+    }
+
+    SignUp getUsers() throws IOException, ClassNotFoundException {
+        SignUp user=null;
+        boolean a=false;
+        ArrayList<SignUp> users=writeToFile.readFile();
+        for(int i=0;i<users.size();i++)
+        {
+            if(users.get(i).isLoginStatus())
+            {
+               user =users.get(i);
+               break;
+            }
+        }
+        return user;
     }
 
     private void clearScreen() throws IOException,InterruptedException {
