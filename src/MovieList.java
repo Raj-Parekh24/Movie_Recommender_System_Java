@@ -1,4 +1,6 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +37,7 @@ public class MovieList{
        addRomance();
        addHorror();
        addSciFi();
+       toPlay();
     }
 
     void searchDisplayGenres(){
@@ -43,7 +46,7 @@ public class MovieList{
     }
 
     void searchDisplayMoviesThroughGenre(int x) throws Exception{
-        //System.out.println(x);
+        System.out.println(allMovielist.size());
         if (x>=1 && x<=5) {
             for (int i=1; i<allMovielist.get(x-1).size(); i++) {
                 System.out.println(allMovielist.get(x-1).get(i));
@@ -52,6 +55,44 @@ public class MovieList{
         }
         //System.out.println(allMovielist.get(0).get(0));
         //over here it throws eof exception
+    }
+
+    boolean toPlayFor4() throws IOException, InterruptedException {
+        boolean res=true;
+        System.out.println("Playable movies we have are :-");
+        for(String i:allMovielist.get(5)){
+            System.out.println(i);
+        }
+        System.out.println("Do you Want to Play it: 1.YES  2.NO ");
+        BufferedReader br = new BufferedReader(new
+                InputStreamReader(System.in));
+        int c=Integer.parseInt(br.readLine());
+        if(c==1){
+            String movieName;
+            boolean a=true;
+            do{
+                System.out.println("Enter movie you want to play :- ");
+                movieName=br.readLine();
+                for(String i:allMovielist.get(5)){
+                    if(movieName.equals(i)){
+                        a=false;
+                        delay("Playing",5);
+                        Thread.sleep(7000);
+                        movieName=movieName.toLowerCase();
+                        movieName=movieName.replaceAll("\\s","");
+                        movieplay(movieName);
+                        break;
+                    }
+                }
+                if(a){
+                    System.out.println("Please Enter the name Correctly");
+                }
+            }while (a);
+        }
+        else{
+            res=false;
+        }
+        return res;
     }
     boolean play(String mvname) throws IOException, ClassNotFoundException, InterruptedException {
         boolean r=false;
@@ -62,7 +103,7 @@ public class MovieList{
             mapUpdate(mvname);
             //new ProcessBuilder("cmd", "/c", "D:").inheritIO().start().waitFor();
            // new ProcessBuilder().command("C:\\Users\\rajpa\\mission.mp4");
-            movieplay("mission");//pass mvname.toLowerCase().trim()
+           // movieplay(mvname.toLowerCase().trim());//pass mvname.toLowerCase().trim()
             r = false;
         }
         else{
@@ -219,6 +260,17 @@ public class MovieList{
         handler=null;
     }
 
+    private void toPlay(){
+        handler =new ArrayList<String>();
+        handler.add("Avengers Endgame");
+        handler.add("Uri");
+        handler.add("Mission Mangal");
+        handler.add("Iron Man 3");
+        handler.add("Captain America First Avenger");
+        allMovielist.add(handler);
+        handler=null;
+    }
+
     private void addRomance()
     {
         handler =new ArrayList<String>();
@@ -348,7 +400,7 @@ public class MovieList{
             // Just one line and you are done !
             // We have given a command to start cmd
             // /K : Carries out command specified by string
-            Runtime.getRuntime().exec(new String[] {"cmd", "/K", "C:\\"+s+".mp4"});
+            Runtime.getRuntime().exec(new String[] {"cmd", "/K", "F:\\movietoplay\\"+s+".mp4"});
 
         }
         catch (Exception e)
@@ -357,5 +409,4 @@ public class MovieList{
             e.printStackTrace();
         }
     }
-
 }

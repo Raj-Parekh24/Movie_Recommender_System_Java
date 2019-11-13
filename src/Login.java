@@ -18,6 +18,8 @@ class Login {
                     System.out.println("Any user has not been logged in");
                 }
                 else {
+                    delay("Logging In",3);
+                    Thread.sleep(4000);
                     MovieSuggester movieSuggester=new MovieSuggester(getUsers());
                     movieSuggester.getMenuDrive();
                     return;
@@ -65,7 +67,7 @@ class Login {
                            else {
                                System.out.println("Please enter your password correctly");
                                Scanner s = new Scanner(System.in);
-                               upassword = s.nextLine();
+                               upassword = PasswordField.readPassword("Enter your password :-");
                            }
                        } while (checkp);
                    }
@@ -99,8 +101,7 @@ class Login {
         Scanner sc=new Scanner(System.in);
         System.out.print("Enter your registered email id :- ");
         setUemail(sc.nextLine());
-        System.out.println("Enter your password :-");
-        setUpassword(sc.nextLine());
+        setUpassword(PasswordField.readPassword("Enter your password :-"));
     }
 
     public String getUemail() {

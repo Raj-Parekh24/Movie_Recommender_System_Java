@@ -38,9 +38,9 @@ public class Check {
                   break;
               }
               case 3: {
-                  delay("Quiting",5);
+                  delay("Quiting",3);
                   clearScreen();
-                  Thread.sleep(6000);
+                  Thread.sleep(5000);
                   chk=false;
               }
           }

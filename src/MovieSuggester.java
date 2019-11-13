@@ -42,7 +42,7 @@ public class MovieSuggester extends MovieList {
             }
         return favGenre;
     }
-    ///Executable Main METHOD
+
     public void  getMovies()  {
         moviesWatch=new ArrayList<String>();
         if(movieSuggesttionSum()>=10) {
@@ -72,14 +72,15 @@ public class MovieSuggester extends MovieList {
         boolean chk=true;
         clearScreen();
         do{
+            clearScreen();
             System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
             System.out.println("Welcome :- "+user.getUsername());
             System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
-            System.out.println("BROWSE OUR MOVIES press 1   |   SEARCH OUR MOVIES press 2   |   OUR MOVIE RECOMMENDATIONS press 3   |   GO TO MAIN WINDOW press 4:- ");
+            System.out.println("BROWSE OUR MOVIES press 1   |   SEARCH OUR MOVIES press 2   |   OUR MOVIE RECOMMENDATIONS press 3   |   Playable Movies press 4:-  |   GO TO MAIN WINDOW press 5:- ");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
             int x=sc.nextInt();
             try{
-                if(x!=1 && x!=2 && x!=3 && x!=4)
+                if(x!=1 && x!=2 && x!=3 && x!=4 && x!=5)
                     throw new Exception("Please Enter a Valid Input!");
             }catch (Exception e){
                 System.out.println(e.getMessage());
@@ -92,8 +93,8 @@ public class MovieSuggester extends MovieList {
                     try{
                         if(y!=1 && y!=2 && y!=3 && y!=4 && y!=5)
                             throw new Exception("Please Enter a Valid Input!");
-                        delay("Loading",5);
-                        Thread.sleep(7000);
+                        delay("Loading",3);
+                        Thread.sleep(5000);
                         clearScreen();
                         searchDisplayMoviesThroughGenre(y);
                         clearScreen();
@@ -118,8 +119,8 @@ public class MovieSuggester extends MovieList {
                 }
                 case 3:{
                     clearScreen();
-                    delay("Loading",5);
-                    Thread.sleep(7000);
+                    delay("Loading",3);
+                    Thread.sleep(5000);
                     clearScreen();
                     System.out.println("Our Suggested Movies are :- ");
                     getMovies();
@@ -128,13 +129,19 @@ public class MovieSuggester extends MovieList {
                     clearScreen();
                     break;
                 }
-                case 4: {
+                case 4:{
                     clearScreen();
-                    System.out.println("We are transferring you to main window :-");
+                    if(toPlayFor4())
+                        continue;
+                    break;
+                }
+                case 5: {
+                    clearScreen();
+                    delay("We are transferring you to main window",2);
+                    Thread.sleep(3000);
                     clearScreen();
                     chk=false;
                 }
-
             }
         }while(chk);
     }

@@ -210,14 +210,13 @@ public class SignUp extends User  {
         String us;
 
         while (!ch) {
-            System.out.println("Enter a Password :- ");
-            us = sc.nextLine();
+            us=PasswordField.readPassword("Enter a Password :- ");
             ch = us1.pass(us);
         }
         ch=false;
         while (!ch) {
             System.out.println("Confirm Your Password :-");
-            us = sc.nextLine();
+            us=PasswordField.readPassword("Enter a Password :- ");
             ch = us1.Confirmpass(us);
         }
     }
