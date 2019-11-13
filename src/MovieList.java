@@ -60,6 +60,9 @@ public class MovieList{
         int x=sc.nextInt();
         if(x==1) {
             mapUpdate(mvname);
+            //new ProcessBuilder("cmd", "/c", "D:").inheritIO().start().waitFor();
+           // new ProcessBuilder().command("C:\\Users\\rajpa\\mission.mp4");
+            movieplay("mission");//pass mvname.toLowerCase().trim()
             r = false;
         }
         else{
@@ -182,6 +185,7 @@ public class MovieList{
         handler.add("Blade");
         handler.add("Bad Boys");
         handler.add("Batwoman");
+        handler.add("mission");
         allMovielist.add(handler);
         handler=null;
     }
@@ -336,6 +340,22 @@ public class MovieList{
 
     void clearScreen() throws IOException,InterruptedException {
         new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+    }
+
+    void movieplay(String s){
+        try
+        {
+            // Just one line and you are done !
+            // We have given a command to start cmd
+            // /K : Carries out command specified by string
+            Runtime.getRuntime().exec(new String[] {"cmd", "/K", "C:\\"+s+".mp4"});
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("HEY Buddy ! U r Doing Something Wrong ");
+            e.printStackTrace();
+        }
     }
 
 }
